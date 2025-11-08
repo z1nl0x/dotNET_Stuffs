@@ -1,0 +1,7 @@
+﻿services:
+  eshop-microservices:
+    image: eshop-microservices
+    build:
+      context: .
+      dockerfile: Dockerfile
+

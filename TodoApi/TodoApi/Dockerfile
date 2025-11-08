@@ -1,5 +1,9 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+
+ENV ASPNETCORE_URLS="https://+:8081;http://+:8080"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="senha123"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/https/aspnetapp.pfx"
+
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -7,17 +11,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
 COPY ["TodoApi/TodoApi.csproj", "TodoApi/"]
 RUN dotnet restore "TodoApi/TodoApi.csproj"
+
 COPY . .
 WORKDIR "/src/TodoApi"
-RUN dotnet build "./TodoApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "TodoApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./TodoApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "TodoApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "TodoApi.dll"]
