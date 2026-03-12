@@ -58,18 +58,17 @@ public class ProductController : ControllerBase
         }
     }
     
-    // Handles HTTP DELETE request to delete a product by ID
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         try
         {
-            await _productService.DeleteProductAsync(id); // Calls service to delete product
-            return NoContent(); // Returns 204 No Content response on success
+            await _productService.DeleteProductAsync(id);
+            return NoContent();
         }
         catch (KeyNotFoundException)
         {
-            return NotFound(); // Returns 404 Not Found if product does not exist
+            return NotFound();
         }
     }
 }
