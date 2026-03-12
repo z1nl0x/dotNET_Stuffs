@@ -1,4 +1,4 @@
-using PostgresCrud.Entities;
+using PostgresCrud.Domain.Products;
 
 namespace PostgresCrud.Repositories;
 

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PostgresCrud.Domain.User;
 using PostgresCrud.DTOs;
 using PostgresCrud.Services;
 
@@ -6,23 +8,26 @@ namespace PostgresCrud.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
-    
+
     public ProductController(IProductService productService)
     {
         _productService = productService;
     }
-    
+
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
         var products = await _productService.GetAllProductsAsync();
         return Ok(products);
     }
-    
+
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(Guid id)
     {
         try
@@ -35,17 +40,18 @@ public class ProductController : ControllerBase
             return NotFound();
         }
     }
-    
+
     [HttpPost]
-    public async Task<IActionResult> Add(ProductInputModel productDto)
+    [Authorize(Roles = UserRoles.Admin)]
+    public async Task<IActionResult> Add(ProductRequest productDto)
     {
-        var createdProduct = await _productService.AddProductAsync(productDto); 
-        
-        return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct); 
+        var createdProduct = await _productService.AddProductAsync(productDto);
+        return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
     }
-    
+
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, ProductInputModel productDto)
+    [Authorize(Roles = UserRoles.Admin)]
+    public async Task<IActionResult> Update(Guid id, ProductRequest productDto)
     {
         try
         {
@@ -57,8 +63,9 @@ public class ProductController : ControllerBase
             return NotFound();
         }
     }
-    
+
     [HttpDelete("{id}")]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> Delete(Guid id)
     {
         try

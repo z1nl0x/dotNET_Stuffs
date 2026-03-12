@@ -1,4 +1,4 @@
-namespace PostgresCrud.Entities;
+namespace PostgresCrud.Domain.Products;
 
 public class Product
 {

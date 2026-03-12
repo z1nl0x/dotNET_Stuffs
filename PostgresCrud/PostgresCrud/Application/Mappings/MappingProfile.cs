@@ -1,6 +1,6 @@
 using AutoMapper;
+using PostgresCrud.Domain.Products;
 using PostgresCrud.DTOs;
-using PostgresCrud.Entities;
 
 namespace PostgresCrud.Mappings;
 
@@ -8,9 +8,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Product, ProductViewModel>();
+        CreateMap<Product, ProductResponse>();
         
-        CreateMap<ProductInputModel, Product>()
+        CreateMap<ProductRequest, Product>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
     }
 }
