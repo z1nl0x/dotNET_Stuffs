@@ -3,26 +3,30 @@ using PostgresCrud.Data;
 using PostgresCrud.Repositories;
 using PostgresCrud.Services;
 
+using PostgresCrud.Mappings; 
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 
 // Configure PostgreSQL database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register repositories and services
+// Esta linha registra todos os Profiles de mapeamento do seu projeto
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+// ----------------------------------
+
+// Registra os Repositorios e os Serviços
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configura Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -30,9 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
