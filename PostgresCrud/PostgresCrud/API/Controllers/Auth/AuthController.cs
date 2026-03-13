@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    [HttpPost("register")]
+    [HttpPost("register")]  
     public async Task<IActionResult> Register(RegisterRequest request)
     {
         try

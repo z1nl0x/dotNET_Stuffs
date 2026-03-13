@@ -1,6 +1,6 @@
 using PostgresCrud.Domain.User;
 
-namespace PostgresCrud.Infrastructure.Repositories.Users;
+namespace PostgresCrud.Application.Interfaces.Repositories;
 
 public interface IUserRepository
 {

@@ -1,6 +1,6 @@
 using PostgresCrud.Domain.Products;
 
-namespace PostgresCrud.Repositories;
+namespace PostgresCrud.Application.Interfaces.Repositories;
 
 public interface IProductRepository
 {

@@ -1,7 +1,7 @@
 using AutoMapper;
+using PostgresCrud.Application.Interfaces.Repositories;
 using PostgresCrud.Domain.Products;
 using PostgresCrud.DTOs;
-using PostgresCrud.Repositories;
 
 namespace PostgresCrud.Services;
 

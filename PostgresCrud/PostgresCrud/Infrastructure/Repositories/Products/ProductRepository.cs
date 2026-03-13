@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PostgresCrud.Application.Interfaces.Repositories;
 using PostgresCrud.Data;
 using PostgresCrud.Domain.Products;
 

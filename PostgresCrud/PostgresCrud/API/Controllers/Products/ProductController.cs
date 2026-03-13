@@ -4,7 +4,7 @@ using PostgresCrud.Domain.User;
 using PostgresCrud.DTOs;
 using PostgresCrud.Services;
 
-namespace PostgresCrud.Controllers;
+namespace PostgresCrud.API.Controllers.Products;
 
 [ApiController]
 [Route("api/[controller]")]
